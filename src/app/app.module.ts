@@ -11,6 +11,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { CreateModalPage } from '../pages/create-modal/create-modal';
 import { PhotoModalPage } from '../pages/photo-modal/photo-modal';
 import { StreetViewModalPage } from '../pages/street-view-modal/street-view-modal';
+import { ShareModalPage } from '../pages/share-modal/share-modal';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -51,7 +52,8 @@ export class MyErrorHandler implements ErrorHandler {
     TabsPage,
     CreateModalPage,
     PhotoModalPage,
-    StreetViewModalPage
+    StreetViewModalPage,
+    ShareModalPage
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,8 @@ export class MyErrorHandler implements ErrorHandler {
     TabsPage,
     CreateModalPage,
     PhotoModalPage,
-    StreetViewModalPage
+    StreetViewModalPage,
+    ShareModalPage
   ],
   providers: [
     StatusBar,

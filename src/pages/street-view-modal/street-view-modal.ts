@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { ShareModalPage } from '../share-modal/share-modal';
 
 /**
  * Generated class for the StreetViewModalPage page.
@@ -18,7 +19,7 @@ export class StreetViewModalPage {
   @ViewChild('map') mapElement;
   map: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
@@ -27,7 +28,7 @@ export class StreetViewModalPage {
   }
 
   initMap(){
-    let latLng = new google.maps.LatLng(37.869260, -122.254811);
+    let latLng = new google.maps.LatLng(18.2661783, -66.7217359);
     let mapOptions = {
       position: latLng,
       pov: {heading: 165, pitch: 0},
@@ -36,6 +37,11 @@ export class StreetViewModalPage {
 
     this.map - new google.maps.StreetViewPanorama(this.mapElement.nativeElement, mapOptions);
 
+  }
+
+  openShareModal() {
+    let myModal = this.modalCtrl.create(ShareModalPage);
+    myModal.present();
   }
 
 }
