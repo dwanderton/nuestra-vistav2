@@ -22,7 +22,10 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
-
+$font-family-base: 'noto sans';
+$font-family-ios-base: 'noto sans';
+$font-family-md-base: 'noto sans';
+$font-family-wp-base: 'noto sans';
 
 
 // Named Color Variables
@@ -70,8 +73,8 @@ $colors: (
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.default";
-
+//@import "ionic.theme.default";
+@import "ionic.theme.dark";
 
 // Ionicons
 // --------------------------------------------------
