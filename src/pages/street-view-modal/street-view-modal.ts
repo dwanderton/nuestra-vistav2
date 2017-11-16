@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { ShareModalPage } from '../share-modal/share-modal';
-
+declare var google;
 /**
  * Generated class for the StreetViewModalPage page.
  *
