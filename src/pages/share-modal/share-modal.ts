@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { HomePage } from '../home/home'
 /**
  * Generated class for the ShareModalPage page.
  *
@@ -15,8 +15,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ShareModalPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController) {
   }
+
+  homePage = HomePage;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShareModalPage');

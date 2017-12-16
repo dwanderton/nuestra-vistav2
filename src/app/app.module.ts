@@ -19,7 +19,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Pro } from '@ionic/pro';
 
 const IonicPro = Pro.init('0716b822', {
-  appVersion: "0.01"
+  appVersion: "0.0.1"
 });
 
 @Injectable()

@@ -2,5 +2,7 @@
   "name": "NV",
   "app_id": "f164f2ae",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }

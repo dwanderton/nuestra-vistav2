@@ -10,13 +10,16 @@
 </ion-header>
 
 <ion-content> <!-- padding> -->
+  <ion-card [ngClass]="buttonClicked == false ? 'tinyheight': 'expanded'" style="-webkit-transition: max-height 2s; -moz-transition: max-height 2s; -ms-transition: max-height 2s; -o-transition: max-height 2s; transition: max-height 2s;">
+    <div class="imgPreviewThin" style="background: url(assets/imgs/photos/main_photo.png) no-repeat center center; background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+  </ion-card>
   <ion-card>
     <div class="imgPreviewThin" style="background: url(assets/imgs/photos/img3.png) no-repeat center center; background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
   </ion-card>
   <ion-card>
     <div class="imgPreviewThin" style="background: url(assets/imgs/photos/img6.png) no-repeat center center; background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
   </ion-card>
-  <ion-card>
+  <ion-card (click)="onButtonClick()">
     <div class="imgPreviewThin" style="background: url(assets/imgs/photos/img4.png) no-repeat center center; background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
   </ion-card>
   <ion-card>
@@ -35,7 +38,7 @@
     <div class="imgPreviewThin" style="background: url(assets/imgs/photos/img2.png) no-repeat center center; background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
   </ion-card>
   <ion-card>
-    <div class="imgPreviewThin" style="background: url(assets/imgs/photos/img3.png) no-repeat center center; background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    <div class="imgPreviewThin" style="background: url(assets/imgs/photos/img4.png) no-repeat center center; background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
   </ion-card>
 
  <!--  <div class="imgPreviewThin" style="background: url(http://lorempixel.com/801/300/city/) no-repeat center center; background-size: cover; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
