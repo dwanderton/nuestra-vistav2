@@ -9,8 +9,7 @@ It is planned that the first uses of this application will be in Puerto Rico, an
 
 
 
-Notes
-===============
+## Very Rough Notes
 
 Questions
 
@@ -24,7 +23,6 @@ Alex - Legal research slide. Prior
 Competitive analysis slide
 User engagement - OSM maps address difference. designs appropriate for the task:
 Mapping parties - create a new term that is our version of that.
---> MapRoulette.
 
 
 
