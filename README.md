@@ -1,3 +1,5 @@
+![](https://i.imgur.com/12kvJsm.jpg)
+
 Nuestra Vista
 =============
 Nuestra Vista is an mobile app enabling the creation of sharable provocative side-by-side comparisons of before and after the destruction caused by Hurricane Maria. These images of the urban environment and critical infrastructure not only allow individuals to effectively share and comment upon the current state, but also to reflect upon the efforts being made to restore facilities that are underway.
