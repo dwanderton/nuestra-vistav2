@@ -2,7 +2,7 @@
 
 Nuestra Vista is an Ionic mobile application for disaster victims to share their stories. The initial application will be focused around those affected by Hurricane Irma in Puerto Rico. The following poster graphic gives an overview of the problem the application is trying to solve and the means with which it will do so.
 
-![Nuestra Vista Overview Poster](https://github.com/dwanderton/nuestra-vistav2/readme-images/NeustraVistaPoster.png "Neustra Vista Overview Poster")
+![Nuestra Vista Overview Poster](https://raw.githubusercontent.com/dwanderton/nuestra-vistav2/readme-images/NeustraVistaPoster.png "Neustra Vista Overview Poster")
 
 The application's capabilities can be broken down into multipled categories detailed below. Additionally, after a natural disaster, having a strong WiFi connection is not a given, and thus this application supports functionality for both the presence and absence of internet connection.
 
