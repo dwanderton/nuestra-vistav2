@@ -1,13 +1,15 @@
 # NUESTRA VISTA
 
-Nuestra Vista is an Ionic mobile application for disaster victims to share their stories. The initial application will be focused around those affected by Hurricane Irma in Puerto Rico. The following poster graphic gives an overview of the problem the application is trying to solve and the means with which it will do so.
+Nuestra Vista is an mobile app enabling the creation of sharable provocative side­by­side comparisons of before and after the destruction caused by Hurricane Maria. These images of the urban environment and critical infrastructure not only allow individuals to effectively share and comment upon the current state, but also to reflect upon the efforts being made to restore facilities that are underway.
 
-![Nuestra Vista Overview Poster](https://raw.githubusercontent.com/dwanderton/nuestra-vistav2/readme-images/NeustraVistaPoster.png "Neustra Vista Overview Poster")
+From the data generated, the application will create detailed mappings of the current status through a bottom up approach. These mappings and images can be utilized in arenas from news reportage and first response efforts through to directing longer term local and federal government interventions.
+
+It is planned that the first uses of this application will be in Puerto Rico, and that through this use a more generalized application can be built to assist in areas struck by future disasters.
 
 The application's capabilities can be broken down into multipled categories detailed below. Additionally, after a natural disaster, having a strong WiFi connection is not a given, and thus this application supports functionality for both the presence and absence of internet connection.
 
 ### Accessing a User's Camera
-The user's camera allows others to see through the eyes of a disaster victim or relief worker. Accessing the native camera of a mobile device will be achieved through...
+The user's camera allows others to see through the eyes of a disaster victim or relief worker. Accessing the camera of a mobile device will be achieved through Ionic's ability to use a mobile device's native features. expand ...
 
 ### Using Google Streetview API
 Google Streetview present an unparalleled opportunity to see images of urban and rural areas before disaster struck. Using their API ...
@@ -20,38 +22,6 @@ A user will have the ability to post their created images to a public news feed 
 
 The news feed files are ...
 
-
-## Offline Protocol
+## Online vs. Offline Protocol
 
 As mentioned previously, this application has special functionality when a user does not have internet. The offline mode acts similarly to the online mode ... does google street view have downloadable content????!?!?! 
-
-
------------------------------
-
-Questions
-
-Internet, sent when internet is strong. transition period.
-When does internet connectivity return
-
-Legal framework.
-
-Isabel - "Next time the people will get more prepared", repeat.
-Alex - Legal research slide. Prior
-Competitive analysis slide
-User engagement - OSM maps address difference. designs appropriate for the task:
-Mapping parties - create a new term that is our version of that.
---> MapRoulette.
-
-
-
-Yeah, how about the share button being bigger, and the close being smaller, FAB pre-expanded.
-
-How do you get the initial users? MappingParties. We go to PuertoRico in January 2018.
-
-Timeline slide.
-
-Purpose, App structure, design, direction. Sarah answers qs on these.
-
-Why do tweets matter? The current government & bottom up approach. Just finished a survey on bridges in the country, we are much faster.
-
-Who cares?
