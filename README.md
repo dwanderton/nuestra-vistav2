@@ -25,3 +25,12 @@ The news feed files are ...
 ## Online vs. Offline Protocol
 
 As mentioned previously, this application has special functionality when a user does not have internet. The offline mode acts similarly to the online mode ... does google street view have downloadable content????!?!?! 
+
+### How to Run (Dev)
+
+`ionic cordova plugin add cordova-plugin-camera`
+`ionic cordova plugin add cordova-plugin-statusbar`
+
+Adds details to config.xml (now not needed but for reference.)
+`cordova plugin add cordova-plugin-camera --variable CAMERA_USAGE_DESCRIPTION="My App would like to access your camera, to take photos of your documents."`
+
