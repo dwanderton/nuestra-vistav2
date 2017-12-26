@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 //import { PhotoModalPage } from '../photo-modal/photo-modal';
 import { StreetViewModalPage } from '../street-view-modal/street-view-modal';
-import {Camera} from "ionic-native";
+import { Camera } from "ionic-native";
 
 /**
  * Generated class for the CreateModalPage page.
@@ -16,53 +16,80 @@ import {Camera} from "ionic-native";
   selector: 'page-create-modal',
   templateUrl: 'create-modal.html',
 })
+
+/**
+* Class represents the camera and its corresponding functionality
+*/
 export class CreateModalPage {
 
-  public base64Image: string;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController) {
-    // this.base64Image = "https://placehold.it/150x150";
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public viewCtrl: ViewController, public modalCtrl: ModalController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateModalPage');
   }
+
+  // TODO Don't think we need this anymore.
   dismissModal() {
     this.viewCtrl.dismiss();
   }
-  /*openPhotoModal() {
-    let myModal = this.modalCtrl.create(PhotoModalPage);
-    console.log("opening up that photo model! Oh yea!")
-    myModal.present();
-  }*/
+
+  /**
+  * Opens the Google Street View API page
+  */
   openStreetViewModal() {
     let myModal = this.modalCtrl.create(StreetViewModalPage);
     myModal.present();
   }
 
-  takePhoto() { // Seems to work but still crashes rather frequently.
-                // It is truly odd behavior that may be caused by the ios
-                // simulator. Sometimes it crashed on the street view portion.
+  /**
+  * Sets the options for generating a photo either from a user's photo library
+  * or through the user's native camera
+  *
+  * @param srcType a number that represents the source of the image.
+  *                Requires that it is one of the following:
+  *                Camera.PictureSourceType.CAMERA
+  *                Camera.PictureSourceType.SAVEDPHOTOALBUM
+  *                Camera.PictureSourceType.PHOTOLIBRARY
+  */
+  setOptions(srcType) {
     var options = {
-        quality : 100,
-        destinationType : Camera.DestinationType.DATA_URL,
-        sourceType : Camera.PictureSourceType.CAMERA,
+        quality: 100,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: srcType,
+        encodingType: Camera.EncodingType.JPEG,
         mediaType: Camera.MediaType.PICTURE,
-        allowEdit : true,
-        encodingType : Camera.EncodingType.JPEG,
-        targetWidth : 300,
-        targetHeight : 300,
-        saveToPhotoAlbum : false
-    };
-    console.log(JSON.stringify(options));
-    Camera.getPicture(options).then(imageData => {
-      // imageData is a base64 encoded string
-      this.base64Image = "data:image/jpeg;base64," + imageData;
-    }, error => {
-      console.log("ERROR!! " + JSON.stringify(error));
-    });
+        allowEdit: true,
+        saveToPhotoAlbum : false,
+        correctOrientation: true  //Corrects Android orientation quirks
+    }
+    return options;
+  }
 
-    this.openStreetViewModal();
+
+  /**
+  * Takes a photo with the device's native camera & handles the resulting photo
+  */
+  public takePhoto() {
+    Camera.getPicture(this.setOptions(Camera.PictureSourceType.CAMERA))
+          .then(imageUri => {
+      this.useImage(imageUri);
+      this.openStreetViewModal();
+    }, error => {
+      console.debug("Unable to obtain picture: " + error);
+    });
+  }
+
+
+  /**
+  * Handles using the resulting image from takePhoto
+  *
+  * @param imgUri the image uri to use in image processing functionality etc.
+  */
+  useImage(imgUri) {
+    // Do stuff with the newly created image
+    // var elem = (<HTMLImageElement> document.getElementById('imageFile'));
+    // elem.src = imgUri;
   }
 
 }
