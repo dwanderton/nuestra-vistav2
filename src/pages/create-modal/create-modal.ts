@@ -76,7 +76,7 @@ export class CreateModalPage {
       this.useImage(imageUri);
       this.openStreetViewModal();
     }, error => {
-      console.debug("Unable to obtain picture: " + error);
+      console.log("Unable to obtain picture: " + error);
     });
   }
 
