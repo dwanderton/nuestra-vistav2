@@ -51,6 +51,7 @@ export class CreateModalPage {
   *                Camera.PictureSourceType.CAMERA
   *                Camera.PictureSourceType.SAVEDPHOTOALBUM
   *                Camera.PictureSourceType.PHOTOLIBRARY
+  * @return the options generated for using the user's native camera
   */
   setOptions(srcType) {
     var options = {
@@ -70,7 +71,7 @@ export class CreateModalPage {
   /**
   * Takes a photo with the device's native camera & handles the resulting photo
   */
-  public takePhoto() {
+  takePhoto() {
     Camera.getPicture(this.setOptions(Camera.PictureSourceType.CAMERA))
           .then(imageUri => {
       this.useImage(imageUri);

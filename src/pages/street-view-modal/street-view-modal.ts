@@ -30,41 +30,68 @@ export class StreetViewModalPage {
     this.initMap();
   }
 
-  initMap() {
+  /**
+  * Uses a device's native geolocation capabilities to get the user's current position
+  *
+  * @return a JSON object whose keys are 'lat' and 'lng' and whose calues are the corresponding
+  *         latitude and longitude respectively
+  */
+  getLocation() {
     Geolocation.getCurrentPosition().then((resp) => {
+      console.log("Latitude: ", resp.coords.latitude, "\nLongitude: ", resp.coords.longitude);
+      return {lat: resp.coords.latitude, lng: resp.coords.longitude};
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+  }
 
-    console.log("lat, long: ", resp.coords.latitude, resp.coords.longitude)
-    // let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-    var mapOptions;
+  /**
+  * Loads a Google street view panorama on a user's device according to the options passed in
+  *
+  * @param mapOptions a JSON object that specifies the street view's position, pov, zoom etc.
+  *                   requires that the following keys be the object with appropariate values,
+  *                   'position', 'pov' including a value with 'heading' and 'pitch' keys
+  */
+  loadPanorama(mapOptions): void {
+    console.log("Loading the panorama...");
+    this.map - new google.maps.StreetViewPanorama(this.mapElement.nativeElement, mapOptions);
+    console.log("Panorama created and loaded.");
+  }
 
-    function generatePanoramaSettings(callback) {
-      var streetviewService = new google.maps.StreetViewService;
-      streetviewService.getPanorama({
-           location: {lat: resp.coords.latitude, lng: resp.coords.longitude},
-           preference: google.maps.StreetViewPreference.NEAREST,
-           radius: 100},
-          function(result, status) {
-              console.log("new lat: ", result.location.latLng.lat());
-              console.log("new long: ", result.location.latLng.lng());
-              mapOptions = {
-                position: result.location.latLng,
-                pov: {heading: 165, pitch: 0},
-                pano: "User's Location",
-                zoom: 1
-              };
+  /**
+  * Creates the map options for panorama generation. This includes adjusting the coordinate
+  * position of a user to the nearest available street view. Following creation of the settings,
+  * it generates the street view on a user's device.
+  *
+  * @param userLocation a JSON object whose keys are 'lat' and 'lng' and whose calues are
+  *                     the corresponding latitude and longitude respectively
+  */
+  generatePanorama(userLocation): void {
+    var streetviewService = new google.maps.StreetViewService;
+    streetviewService.getPanorama({
+      location: userLocation,
+      preference: google.maps.StreetViewPreference.NEAREST,
+      radius: 100},
+      function(result, status) {
+        console.log("Adjusted latitude: ", result.location.latLng.lat(),
+                    "\nAdjusted longitude: ", result.location.latLng.lng());
+        let mapOptions = {
+          position: result.location.latLng,
+          pov: {heading: 165, pitch: 0},
+          pano: "User's Location",
+          zoom: 1
+        };
 
-              console.log("calling the callback!");
-              callback();
-          });
-      }
+        this.loadPanorama(mapOptions);
+      });
+  }
 
-      function loadPanorama() {
-          this.map - new google.maps.StreetViewPanorama(this.mapElement.nativeElement, mapOptions);
-          console.log("Street View Generated")
-      }
-
-      generatePanoramaSettings( function() { loadPanorama(); });
-
+  /**
+  * Initialize a Google Street View Panorama image
+  */
+  initMap(): void {
+    this.generatePanorama(this.getLocation);
+      // ~~~~~ THE OLD CODE ~~~~~~
       // console.log("User's location:\nlatitude: ", resp.coords.latitude, "\nlongitude: ", resp.coords.longitude)
       // let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       // let mapOptions = {
@@ -73,9 +100,6 @@ export class StreetViewModalPage {
       //   zoom: 1
       // };
       // this.map - new google.maps.StreetViewPanorama(this.mapElement.nativeElement, mapOptions);
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
   }
 
   openShareModal() {
