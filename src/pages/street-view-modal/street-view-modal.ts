@@ -32,21 +32,6 @@ export class StreetViewModalPage {
   }
 
   /**
-  * Uses a device's native geolocation capabilities to get the user's current position
-  *
-  * @return a JSON object whose keys are 'lat' and 'lng' and whose calues are the corresponding
-  *         latitude and longitude respectively
-  */
-  getLocation() {
-    Geolocation.getCurrentPosition().then((resp) => {
-      console.log("Latitude: ", resp.coords.latitude, "\nLongitude: ", resp.coords.longitude);
-      return {lat: resp.coords.latitude, lng: resp.coords.longitude};
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
-  }
-
-  /**
   * Loads a Google street view panorama on a user's device according to the options passed in
   *
   * @param mapOptions a JSON object that specifies the street view's position, pov, zoom etc.
@@ -55,7 +40,7 @@ export class StreetViewModalPage {
   */
   loadPanorama(mapOptions): void {
     console.log("Loading the panorama...");
-    this.map - new google.maps.StreetViewPanorama(this.mapElement.nativeElement, mapOptions);
+    var panorama = new google.maps.StreetViewPanorama(document.getElementById('street-view'), mapOptions);
     console.log("Panorama created and loaded.");
   }
 
@@ -64,11 +49,10 @@ export class StreetViewModalPage {
   * position of a user to the nearest available street view. Following creation of the settings,
   * it generates the street view on a user's device.
   *
-  * @param userLocation a JSON object whose keys are 'lat' and 'lng' and whose calues are
+  * @param userLocation a JSON object whose keys are 'lat' and 'lng' and whose values are
   *                     the corresponding latitude and longitude respectively
   */
   generatePanorama(userLocation): void {
-    console.log("USER LOCATION: ", userLocation);
     var streetviewService = new google.maps.StreetViewService;
     streetviewService.getPanorama({
       location: userLocation,
@@ -77,22 +61,35 @@ export class StreetViewModalPage {
       function(result, status) {
         console.log("Adjusted latitude: ", result.location.latLng.lat(),
                     "\nAdjusted longitude: ", result.location.latLng.lng());
-        let mapOptions = {
+        new google.maps.StreetViewPanorama(document.getElementById('street-view'), {
           position: result.location.latLng,
           pov: {heading: 165, pitch: 0},
-          pano: "User's Location",
           zoom: 1
-        };
-
-        this.loadPanorama(mapOptions);
+        });
       });
+  }
+
+  /**
+  * Uses a device's native geolocation capabilities to get the user's current position
+  *
+  * @return a JSON object whose keys are 'lat' and 'lng' and whose calues are the corresponding
+  *         latitude and longitude respectively
+  */
+  getLocation(callback): void {
+    Geolocation.getCurrentPosition().then((position) => {
+      console.log("Latitude: ", position.coords.latitude, "\nLongitude: ", position.coords.longitude);
+      callback({lat: position.coords.latitude, lng: position.coords.longitude});
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 
   /**
   * Initialize a Google Street View Panorama image
   */
   initMap(): void {
-    this.generatePanorama(this.getLocation());
+    this.getLocation(this.generatePanorama);
+    //this.generatePanorama(this.getLocation());
       // ~~~~~ THE OLD CODE ~~~~~~
     // let location = this.getLocation();
     // console.log("User's location:\nlatitude: ", location.lat, "\nlongitude: ", resp.coords.longitude)
