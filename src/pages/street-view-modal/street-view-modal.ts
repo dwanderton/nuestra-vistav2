@@ -21,6 +21,7 @@ export class StreetViewModalPage {
 
   @ViewChild('map') mapElement;
   map: any;
+  location: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public viewCtrl: ViewController, public modalCtrl: ModalController) {}
@@ -67,6 +68,7 @@ export class StreetViewModalPage {
   *                     the corresponding latitude and longitude respectively
   */
   generatePanorama(userLocation): void {
+    console.log("USER LOCATION: ", userLocation);
     var streetviewService = new google.maps.StreetViewService;
     streetviewService.getPanorama({
       location: userLocation,
@@ -90,16 +92,17 @@ export class StreetViewModalPage {
   * Initialize a Google Street View Panorama image
   */
   initMap(): void {
-    this.generatePanorama(this.getLocation);
+    this.generatePanorama(this.getLocation());
       // ~~~~~ THE OLD CODE ~~~~~~
-      // console.log("User's location:\nlatitude: ", resp.coords.latitude, "\nlongitude: ", resp.coords.longitude)
-      // let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-      // let mapOptions = {
-      //   position: latLng,
-      //   pov: {heading: 165, pitch: 0},
-      //   zoom: 1
-      // };
-      // this.map - new google.maps.StreetViewPanorama(this.mapElement.nativeElement, mapOptions);
+    // let location = this.getLocation();
+    // console.log("User's location:\nlatitude: ", location.lat, "\nlongitude: ", resp.coords.longitude)
+    // let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+    // let mapOptions = {
+    //   position: latLng,
+    //   pov: {heading: 165, pitch: 0},
+    //   zoom: 1
+    // };
+    // this.map - new google.maps.StreetViewPanorama(this.mapElement.nativeElement, mapOptions);
   }
 
   openShareModal() {

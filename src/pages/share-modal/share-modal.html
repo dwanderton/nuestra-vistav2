@@ -32,10 +32,10 @@
       <button ion-fab color="danger"><ion-icon name="logo-googleplus"></ion-icon></button>
   </ion-fab>
     <ion-fab center middle style="left:65%;top:65%;">
-      <button ion-fab style="background-color:#3B5998"><ion-icon name="logo-facebook"></ion-icon></button>
+      <button ion-fab style="background-color:#3B5998" (click)="shareViaFacebook('Test Facebook Share', null, null)"><ion-icon name="logo-facebook"></ion-icon></button>
   </ion-fab>
   <ion-fab center middle style="left:35%;top:65%;">
-      <button ion-fab style="background-color:#1DA1F2"><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab style="background-color:#1DA1F2" (click)="shareViaTwitter('Hello World', null, null)"><ion-icon name="logo-twitter"></ion-icon></button>
   </ion-fab>
 
 </ion-content>
