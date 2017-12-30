@@ -31,7 +31,7 @@ export class StreetViewModalPage {
     this.initMap();
   }
 
-  /**
+  /** TODO DELETE THIS FUNCTION???!? ... yes?
   * Loads a Google street view panorama on a user's device according to the options passed in
   *
   * @param mapOptions a JSON object that specifies the street view's position, pov, zoom etc.

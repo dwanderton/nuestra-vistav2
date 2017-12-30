@@ -26,6 +26,7 @@ export class ShareModalPage {
     console.log('ionViewDidLoad ShareModalPage');
   }
 
+  // TODO: add catch for social app not exisiting
   /**
   * Shares content via a user's Twitter account
   *
@@ -44,6 +45,7 @@ export class ShareModalPage {
     });
   }
 
+  // TODO: add catch for social app not exisiting
   /**
   * Shares content via a user's Facebook account
   *
@@ -62,6 +64,7 @@ export class ShareModalPage {
     });
   }
 
+  // TODO: add catch for social app not exisiting
   /**
   * Shares content via a user's Instagram account
   *
@@ -79,6 +82,7 @@ export class ShareModalPage {
     });
   }
 
+  // TODO: add catch for social app not exisiting
   /**
   * Shares content via a user's What's App account
   *

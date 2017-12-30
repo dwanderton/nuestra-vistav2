@@ -22,20 +22,22 @@
 
 
 <ion-content padding>
-  <ion-fab center middle style="top:75%;">
-    <button ion-fab mini color="light"><ion-icon name="md-close"></ion-icon></button>
+
+  <ion-fab center middle style="top:90%;">
+    <button ion-fab color="pink">NV</button>
   </ion-fab>
-  <!--<ion-fab center middle style="top:77%;">
-    <button ion-fab color="primary"><ion-icon name="logo-vimeo"></ion-icon></button>
-  </ion-fab>-->
-  <ion-fab center middle style="top:53%;">
-      <button ion-fab color="danger"><ion-icon name="logo-googleplus"></ion-icon></button>
+
+  <ion-fab center middle style="top:75%;">
+    <button ion-fab color="light" (click)="shareViaWhatsApp('Sharing Neustra Vista Photo to Whats App', null, null)"><ion-icon name="logo-whatsapp"></ion-icon></button>
+  </ion-fab>
+  <ion-fab center middle style="top:55%;">
+      <button ion-fab color="danger" (click)="shareViaInstagram('Sharing Neustra Vista Photo to Instagram', null)"><ion-icon name="logo-instagram"></ion-icon></button>
   </ion-fab>
     <ion-fab center middle style="left:65%;top:65%;">
-      <button ion-fab style="background-color:#3B5998" (click)="shareViaFacebook('Test Facebook Share', null, null)"><ion-icon name="logo-facebook"></ion-icon></button>
+      <button ion-fab style="background-color:#3B5998" (click)="shareViaFacebook('Sharing Neustra Vista Photo to Facebook', null, null)"><ion-icon name="logo-facebook"></ion-icon></button>
   </ion-fab>
   <ion-fab center middle style="left:35%;top:65%;">
-      <button ion-fab style="background-color:#1DA1F2" (click)="shareViaTwitter('Hello World', null, null)"><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab style="background-color:#1DA1F2" (click)="shareViaTwitter('Sharing Neustra Vista Photo to Twitter', null, null)"><ion-icon name="logo-twitter"></ion-icon></button>
   </ion-fab>
 
 </ion-content>
