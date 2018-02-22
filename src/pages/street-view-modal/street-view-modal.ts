@@ -1,15 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, Platform, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { ShareModalPage } from '../share-modal/share-modal';
 import { Geolocation } from 'ionic-native';
-declare var google;
 
-/**
- * Generated class for the StreetViewModalPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+
+declare var google;
 
 @IonicPage()
 @Component({
@@ -21,28 +18,41 @@ export class StreetViewModalPage {
 
   @ViewChild('map') mapElement;
   map: any;
-  location: any = {};
+  panorama: any;
+  cameraImageURI: string = '';
+  storageDirectory: string = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public viewCtrl: ViewController, public modalCtrl: ModalController) {}
+              public platform: Platform, public viewCtrl: ViewController,
+              public modalCtrl: ModalController, private transfer: FileTransfer,
+              private file: File) {
+
+    this.cameraImageURI = navParams.get("camera_image_uri");
+    this.initMap();
+    this.openShareModal = this.openShareModal.bind(this);
+
+    this.platform.ready().then(() => {
+
+        if (!this.platform.is('cordova')) {
+          return false;
+        }
+
+        if (this.platform.is('ios')) {
+          this.storageDirectory = this.file.documentsDirectory;
+        } else if (this.platform.is('android')) {
+          this.storageDirectory = this.file.dataDirectory;
+        } else {
+          return false;
+        }
+
+      });
+  }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StreetViewModalPage');
-    this.initMap();
   }
 
-  /** TODO DELETE THIS FUNCTION???!? ... yes?
-  * Loads a Google street view panorama on a user's device according to the options passed in
-  *
-  * @param mapOptions a JSON object that specifies the street view's position, pov, zoom etc.
-  *                   requires that the following keys be the object with appropariate values,
-  *                   'position', 'pov' including a value with 'heading' and 'pitch' keys
-  */
-  loadPanorama(mapOptions): void {
-    console.log("Loading the panorama...");
-    var panorama = new google.maps.StreetViewPanorama(document.getElementById('street-view'), mapOptions);
-    console.log("Panorama created and loaded.");
-  }
 
   /**
   * Creates the map options for panorama generation. This includes adjusting the coordinate
@@ -53,6 +63,7 @@ export class StreetViewModalPage {
   *                     the corresponding latitude and longitude respectively
   */
   generatePanorama(userLocation): void {
+    var self = this;
     var streetviewService = new google.maps.StreetViewService;
     streetviewService.getPanorama({
       location: userLocation,
@@ -61,13 +72,54 @@ export class StreetViewModalPage {
       function(result, status) {
         console.log("Adjusted latitude: ", result.location.latLng.lat(),
                     "\nAdjusted longitude: ", result.location.latLng.lng());
-        new google.maps.StreetViewPanorama(document.getElementById('street-view'), {
+        self.panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), {
           position: result.location.latLng,
           pov: {heading: 165, pitch: 0},
           zoom: 1
         });
+        self.bindEvents();
       });
   }
+
+
+  bindEvents() {
+  	var self = this;
+    this.panorama.addListener('pano_changed', function() {
+        var panoCell = document.getElementById('pano-cell');
+        panoCell.innerHTML = self.panorama.getPano();
+    });
+
+    this.panorama.addListener('links_changed', function() {
+        var linksTable = document.getElementById('links_table');
+        while (linksTable.hasChildNodes()) {
+          linksTable.removeChild(linksTable.lastChild);
+        }
+        var links = self.panorama.getLinks();
+        for (var i in links) {
+          var row = document.createElement('tr');
+          linksTable.appendChild(row);
+          var labelCell = document.createElement('td');
+          labelCell.innerHTML = '<b>Link: ' + i + '</b>';
+          var valueCell = document.createElement('td');
+          valueCell.innerHTML = links[i].description;
+          linksTable.appendChild(labelCell);
+          linksTable.appendChild(valueCell);
+        }
+    });
+
+    this.panorama.addListener('position_changed', function() {
+        var positionCell = document.getElementById('position-cell');
+        positionCell.firstChild.nodeValue = self.panorama.getPosition() + '';
+    });
+
+    this.panorama.addListener('pov_changed', function() {
+        var headingCell = document.getElementById('heading-cell');
+        var pitchCell = document.getElementById('pitch-cell');
+        headingCell.firstChild.nodeValue = self.panorama.getPov().heading + '';
+        pitchCell.firstChild.nodeValue = self.panorama.getPov().pitch + '';
+    });
+  }
+
 
   /**
   * Uses a device's native geolocation capabilities to get the user's current position
@@ -87,24 +139,56 @@ export class StreetViewModalPage {
   /**
   * Initialize a Google Street View Panorama image
   */
-  initMap(): void {
-    this.getLocation(this.generatePanorama);
-    //this.generatePanorama(this.getLocation());
-      // ~~~~~ THE OLD CODE ~~~~~~
-    // let location = this.getLocation();
-    // console.log("User's location:\nlatitude: ", location.lat, "\nlongitude: ", resp.coords.longitude)
-    // let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-    // let mapOptions = {
-    //   position: latLng,
-    //   pov: {heading: 165, pitch: 0},
-    //   zoom: 1
-    // };
-    // this.map - new google.maps.StreetViewPanorama(this.mapElement.nativeElement, mapOptions);
+  initMap() {
+    this.getLocation(this.generatePanorama.bind(this));
   }
 
+  /**
+  * Generates a URL to query the Google Maps API for a static image of a location
+  *
+  * @param lat the latitude of the static image to query
+  * @param lng the longitude of the static image to query
+  * @param heading indicates the compass heading of the camera
+  * @param pitch specifies the up or down angle of the camera relative to the street
+  * @return a string that is the URL of a statically generated image of a location
+  */
+  generateStaticMapsURL(lat, lng, heading, pitch): string {
+    var url = "https://maps.googleapis.com/maps/api/streetview?size=600x300&location=";
+    url += lat + "," + lng;
+    url += "&heading=" + heading;
+    url += "&pitch=" + pitch;
+    url += "&key=AIzaSyAPQkL_M88WrEy3Phj7qAS7zTEr8TFDLe0";  // TODO : Privatize
+    return url;
+  }
+
+
+  downloadStreetViewImage() {
+
+    console.log("Downloading Street View Image ...");
+
+    let lat = this.panorama.getPosition().lat();
+    let lng = this.panorama.getPosition().lng();
+    let heading = this.panorama.getPov().heading;
+    let pitch = this.panorama.getPov().pitch;
+    const streetViewURL = this.generateStaticMapsURL(lat, lng, heading, pitch);
+
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    fileTransfer.download(streetViewURL, this.storageDirectory + 'file.png').then((entry) => {
+      console.log('download complete: ' + entry.toURL());
+      this.navCtrl.setRoot(ShareModalPage, {
+        "camera_image_uri": this.cameraImageURI,
+        "street_view_photo_uri": entry.toURL()
+      });
+    }, (err) => {
+      console.error(err);
+    });
+
+  }
+
+
   openShareModal() {
-    let myModal = this.modalCtrl.create(ShareModalPage);
-    myModal.present();
+    this.downloadStreetViewImage();
   }
 
 }

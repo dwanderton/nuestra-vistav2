@@ -63,7 +63,7 @@ export class CreateModalPage {
         allowEdit: true,
         saveToPhotoAlbum : false,
         correctOrientation: true  //Corrects Android orientation quirks
-    }
+    };
     return options;
   }
 

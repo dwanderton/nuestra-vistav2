@@ -7,37 +7,116 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Share your photo</ion-title>
+    <ion-title style="padding-top: 5px">Share</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content class="card-background-page">
+<ion-content>
+  <!--<div>-->
+    <!--<h1>Image 1</h1>-->
+    <!--<div *ngIf="cameraImageURI != null"><img id="img1" [src]="cameraImageURI"></div>-->
+    <!--&lt;!&ndash;<img id="img1" src="">&ndash;&gt;-->
+    <!--<div>-->
+      <!--<h1>Image 2</h1>-->
+      <!--<div *ngIf="streetViewPhotoURI != null"><img id="img2" [src]="streetViewPhotoURI"></div>-->
+      <!--&lt;!&ndash;<img id = "img2" src="">&ndash;&gt;-->
+    <!--</div>-->
 
-  <ion-card>
-    <img src="assets/imgs/photos/main_photo.png"/>
-  </ion-card>
+    <!--<div class="row" >-->
 
-  </ion-content>
+      <!--<div class="col col-50" style="padding-right:0;">-->
+        <!--<img id="left-image" src="../../assets/imgs/simon-test.jpg" style="width:100%">-->
+      <!--</div>-->
+
+      <!--<div class="col col-50" style="padding-left:0;">-->
+        <!--<img id="right-image" src="../../assets/imgs/garfunkel-test.jpg"-->
+             <!--style="width:100%">-->
+      <!--</div>-->
+
+    <!--</div>-->
+
+    <!--<h1>Stretched Image (480x360)</h1>-->
+
+      <!--<div class="row" >-->
+        <!--<div class="col col-50" style="padding-right:0;">-->
+          <!--<img id="left-image" src="../../assets/imgs/simon-test.jpg" style="width:100%">-->
+        <!--</div>-->
+        <!--<div class="col col-50" style="padding-left:0;">-->
+          <!--<img id="right-image" src="../../assets/imgs/garfunkel-test.jpg" style="width:100%">-->
+        <!--</div>-->
+      <!--</div>-->
+
+  <canvas id="pano-canvas" style="display:none;"></canvas>
+
+  <div class="card-background-page">
+    <ion-card ion-row>
+        <div class="imgPreviewThin" style="background-size: cover;
+        -webkit-background-size: cover; -moz-background-size: cover;
+        -o-background-size: cover; flex-direction: column;">
+          <img class="full-image" src="" id="card-image" />
+        </div>
+    </ion-card>
+  </div>
+
+<!--<ion-slides>-->
+  <!--<ion-slide>-->
+    <!--<img src="" id="slider-img1">-->
+  <!--</ion-slide>-->
+  <!--<ion-slide>-->
+    <!--<img src="" id="slider-img2">-->
+  <!--</ion-slide>-->
+<!--</ion-slides>-->
 
 
-<ion-content padding>
+    <!--<div class="button-bar">-->
+      <!--<a class="button button-positive" (mousedown)="left()">-->
+        <!--<ion-icon name="arrow-dropleft"></ion-icon>-->
+      <!--</a>-->
+      <!--<a class="button button-assertive" (mousedown)="right()">-->
+        <!--<ion-icon name="arrow-dropright"></ion-icon>-->
+      <!--</a>-->
+      <!--<a class="button button-assertive" (mousedown)="up()">-->
+        <!--<ion-icon name="arrow-dropup"></ion-icon>-->
+      <!--</a>-->
+      <!--<a class="button button-assertive" (mousedown)="down()">-->
+        <!--<ion-icon name="arrow-dropdown"></ion-icon>-->
+      <!--</a>-->
+    <!--</div>-->
+
+    <!--<button ion-button large (click)="captureCanvas()">Capture Canvas</button>-->
+
+    <!--<p></p>-->
+
+    <!--<img id="test" src="" />-->
+    <!--<canvas id="mashup-canvas" height="300px" width="800px"></canvas>-->
+
+  <!--</div>-->
+
+  <!--<ion-card>-->
+    <!--<img src="assets/imgs/photos/main_photo.png"/>-->
+  <!--</ion-card>-->
+
+  <!--</ion-content>-->
+
+
+
 
   <ion-fab center middle style="top:90%;">
-    <button ion-fab color="pink">NV</button>
+    <button ion-fab mini color="light" (click)="returnHome()"><ion-icon name="home"></ion-icon></button>
   </ion-fab>
 
-  <ion-fab center middle style="top:75%;">
-    <button ion-fab color="light" (click)="shareViaWhatsApp('Sharing Neustra Vista Photo to Whats App', null, null)"><ion-icon name="logo-whatsapp"></ion-icon></button>
+  <ion-fab center middle style="left:14%; top:78%;">
+    <button ion-fab color="whatsApp" (click)="shareViaWhatsApp('Sharing Neustra Vista Photo to Whats App', null, null)"><ion-icon name="logo-whatsapp"></ion-icon></button>
   </ion-fab>
-  <ion-fab center middle style="top:55%;">
-      <button ion-fab color="danger" (click)="shareViaInstagram('Sharing Neustra Vista Photo to Instagram', null)"><ion-icon name="logo-instagram"></ion-icon></button>
+  <ion-fab center middle style="left:38%; top:78%;">
+      <button ion-fab color="instagram" (click)="shareViaInstagram('Sharing Neustra Vista Photo to Instagram', null)"><ion-icon name="logo-instagram"></ion-icon></button>
   </ion-fab>
-    <ion-fab center middle style="left:65%;top:65%;">
-      <button ion-fab style="background-color:#3B5998" (click)="shareViaFacebook('Sharing Neustra Vista Photo to Facebook', null, null)"><ion-icon name="logo-facebook"></ion-icon></button>
+    <ion-fab center middle style="left:62%;top:78%;">
+      <button ion-fab color="facebook" (click)="shareViaFacebook('Sharing Neustra Vista Photo to Facebook', null, null)"><ion-icon name="logo-facebook"></ion-icon></button>
   </ion-fab>
-  <ion-fab center middle style="left:35%;top:65%;">
-      <button ion-fab style="background-color:#1DA1F2" (click)="shareViaTwitter('Sharing Neustra Vista Photo to Twitter', null, null)"><ion-icon name="logo-twitter"></ion-icon></button>
+  <ion-fab center middle style="left:86%;top:78%;">
+      <button ion-fab color="twitter" (click)="shareViaTwitter('Sharing Neustra Vista Photo to Twitter', null, null)"><ion-icon name="logo-twitter"></ion-icon></button>
   </ion-fab>
 
 </ion-content>

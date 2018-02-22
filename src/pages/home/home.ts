@@ -1,6 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { Platform, NavController, NavParams, ViewController, ModalController, ToastController, PopoverController } from 'ionic-angular';
 import { CreateModalPage } from '../create-modal/create-modal';
+
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireObject } from 'angularfire2/database';
+import { storage } from 'firebase';
+import { Network } from '@ionic-native/network';
+
+import { Profile } from '../../models/profile';
+import { CameraLibraryPopoverPage } from "../camera-library-popover/camera-library-popover";
 
 @Component({
   selector: 'page-home',
@@ -8,20 +17,34 @@ import { CreateModalPage } from '../create-modal/create-modal';
 })
 
 /**
-* Class represents the landing page of Neustra Vista
+* Class represents the landing page of Nuestra Vista
 */
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              public modalCtrl: ModalController, public viewCtrl: ViewController) {}
+  profileData: AngularFireObject<Profile>;
 
-  /**
-  * Opens the camera and handles corresponding functionality of taken picture
-  */
-  openCamera() {
-      let modalPage = new CreateModalPage(this.navCtrl, this.navParams,
-                                          this.viewCtrl, this.modalCtrl);
-      modalPage.takePhoto();
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public popoverCtrl: PopoverController, private afAuth: AngularFireAuth,
+              private afDatabase: AngularFireDatabase, private toast: ToastController) {
+  }
+
+  ionViewWillLoad() {
+    this.afAuth.authState.subscribe(data => {
+      if (data && data.email && data.uid) {
+        this.toast.create({
+          message: "Welcome to Nuestra Vista!",
+          duration: 3000
+        }).present();
+
+        this.profileData = this.afDatabase.object(('profile/' + data.uid))
+      }
+    });
+  }
+
+
+  presentPopover() {
+    let popover = this.popoverCtrl.create(CameraLibraryPopoverPage);
+    popover.present();
   }
 
 }

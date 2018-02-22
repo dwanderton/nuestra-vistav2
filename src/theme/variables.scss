@@ -37,11 +37,16 @@ $font-family-wp-base: 'noto sans';
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
+  primary:    #53b8ea,
+  secondary:  #e08151,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  gray:       #a6a6b6,
+  dark:       #222,
+  whatsApp:   #25D366,
+  facebook:   #3b5998,
+  instagram:  #e1306c,
+  twitter:    #1da1f2
 );
 
 
@@ -74,7 +79,7 @@ $colors: (
 // default are overridden.
 
 //@import "ionic.theme.default";
-@import "ionic.theme.dark";
+@import "ionic.theme.default";
 
 // Ionicons
 // --------------------------------------------------

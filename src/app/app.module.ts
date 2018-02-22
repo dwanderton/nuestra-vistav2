@@ -12,11 +12,25 @@ import { CreateModalPage } from '../pages/create-modal/create-modal';
 import { PhotoModalPage } from '../pages/photo-modal/photo-modal';
 import { StreetViewModalPage } from '../pages/street-view-modal/street-view-modal';
 import { ShareModalPage } from '../pages/share-modal/share-modal';
+import { LoginPage } from '../pages/login/login';
+import { CameraLibraryPopoverPage } from "../pages/camera-library-popover/camera-library-popover";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Pro } from '@ionic/pro';
+
+import { AngularFireModule } from 'angularfire2';
+import { FIREBASE_CONFIG } from './app.firebase.config';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from "angularfire2/database";
+
+import { Camera } from '@ionic-native/camera';
+import { PhotoLibrary } from '@ionic-native/photo-library';
+import { Network } from '@ionic-native/network';
+
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
 
 const IonicPro = Pro.init('0716b822', {
   appVersion: "0.01"
@@ -53,11 +67,16 @@ export class MyErrorHandler implements ErrorHandler {
     CreateModalPage,
     PhotoModalPage,
     StreetViewModalPage,
-    ShareModalPage
+    ShareModalPage,
+    CameraLibraryPopoverPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -69,12 +88,20 @@ export class MyErrorHandler implements ErrorHandler {
     CreateModalPage,
     PhotoModalPage,
     StreetViewModalPage,
-    ShareModalPage
+    ShareModalPage,
+    CameraLibraryPopoverPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     IonicErrorHandler,
+    Camera,
+    File,
+    PhotoLibrary,
+    FileTransfer,
+    FileTransferObject,
+    Network,
     {provide: ErrorHandler, useClass: MyErrorHandler}
   ]
 })

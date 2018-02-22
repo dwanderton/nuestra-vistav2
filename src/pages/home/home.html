@@ -1,8 +1,11 @@
 <ion-header>
   <ion-toolbar>
+    <button ion-button icon-only clear color="secondary" (click)="openProfile()">
+      <ion-icon name="person"></ion-icon>
+    </button>
     <ion-title>Nuestra Vista</ion-title>
     <ion-buttons start end>
-      <button ion-button icon-only color="secondary" (click)="openCamera()">
+      <button ion-button icon-only color="secondary" (click)="presentPopover()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>

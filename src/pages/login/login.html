@@ -1,0 +1,31 @@
+<ion-content padding>
+
+  <ion-item>
+    <ion-label floating>Email Address</ion-label>
+    <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Password</ion-label>
+    <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+  </ion-item>
+
+  <button ion-button (click)="login(user)">Login</button>
+  <button ion-button color="light" (click)="register()">Register</button>
+
+  <button ion-button color="grey" clear (click)="resetPassword()">
+    Forgot your password?
+  </button>
+
+
+
+
+  <p>
+    No internet connection? Create a photo now and post later!
+  </p>
+
+  <button ion-button color="light" (click)="createPhotoOffline()">
+    Create Photo Offline
+  </button>
+
+</ion-content>
