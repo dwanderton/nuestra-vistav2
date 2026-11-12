@@ -1,0 +1,5 @@
+# Historical findings baselined 2026-11-12 (reviewed; see security sweep notes).
+141d0e708598c954b4d8b4ab77f8de80b52c1ab7:src/app/app.firebase.config.ts:gcp-api-key:2
+141d0e708598c954b4d8b4ab77f8de80b52c1ab7:src/index.html:gcp-api-key:48
+141d0e708598c954b4d8b4ab77f8de80b52c1ab7:src/pages/street-view-modal/street-view-modal.ts:gcp-api-key:160
+f2732262633813a6bd5b40cfcec7462f8d6336cd:src/index.html:gcp-api-key:48
